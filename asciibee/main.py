@@ -6,7 +6,7 @@ parser = argparse.ArgumentParser(
     prog="asciibee",
     description="""Convert an image to ASCII art
 
-    The default settings are tuned to work well with the fine art. Play with
+    The default settings are tuned to work well with fine art. Play with
     different shaders, image squaring, and value inversion for different
     results.
 
