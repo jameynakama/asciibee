@@ -11,10 +11,11 @@ class AsciiImage:
         self,
         image_path: str,
         shader: list,
+        user_shader: str = None,
         max_allowable_width: int = None,
     ) -> None:
         self.image_path = image_path
-        self.shader = shader
+        self.shader = shader if not user_shader else user_shader
         self.max_allowable_width = max_allowable_width
 
     def _reduce(self, image: Image) -> Image:

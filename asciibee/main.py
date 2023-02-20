@@ -31,6 +31,12 @@ parser.add_argument(
     required=False,
 )
 parser.add_argument(
+    "-S",
+    "--user-shader",
+    help="Define your own shader as a sequence of characters",
+    required=False,
+)
+parser.add_argument(
     "-w",
     "--max-width",
     help="The maximum allowable output width (number of columns)",
@@ -67,6 +73,7 @@ args = parser.parse_args()
 ascii_image = convert.AsciiImage(
     args.image_path,
     shader=constants.SHADERS[args.shader - 1],
+    user_shader=args.user_shader,
     max_allowable_width=args.max_width,
 )
 ascii_image.convert(
