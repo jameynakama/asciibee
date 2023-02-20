@@ -6,14 +6,18 @@ parser = argparse.ArgumentParser(
     prog="asciibee",
     description="""Convert an image to ASCII art
 
-    Scaling is done by reducing the image by a factor of 2 until it fits in the
-    terminal window or the width and height are both below the max dimension you
-    specify.
+    The default settings are tuned to work well with the fine art. Play with
+    different shaders, image squaring, and value inversion for different
+    results.
 
-    Each ASCII character is chosen by expanding the range of values to the full
-    range of characters. For example, if the darkest value in the original image
-    is 100 (of 255), then 100 becomes the "new" 0. You can provide the -1 flag
-    to use exact values instead.""",
+    Scaling is done by reducing the image by a factor of 2 until it fits in the
+    terminal window or the width is below the max width you specify.
+
+    Each ASCII character is chosen by expanding the range of pixel values to the
+    full range of characters. For example, if the darkest value in the original
+    image is 100 (of 255), and the lightest 230 (of 255), then 100 becomes the
+    "new" 0 (and darkest char) and 230 the new 255 (and lightest char). You can
+    provide the -1 flag to use exact values instead.""",
     formatter_class=argparse.RawTextHelpFormatter,
 )
 parser.add_argument("image_path", help="Path to the image to convert")
