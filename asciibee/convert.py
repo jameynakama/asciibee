@@ -31,20 +31,46 @@ class AsciiImage:
         rotated = numpy.rot90(matrix, 3)
         return numpy.flip(rotated, 1)
 
-    def convert(self, original_size: bool = False, reverse_values: bool = False) -> None:
+    def convert(
+        self,
+        original_size: bool = False,
+        invert_values: bool = False,
+        one_to_one: bool = False,
+        no_squaring: bool = False,
+    ) -> None:
         with Image.open(self.image_path).convert("L") as image:
             if not original_size:
                 image = self._reduce(image)
 
-            if reverse_values:
+            if invert_values:
                 self.shader = self.shader[::-1]
 
-            for x in range(image.size[0]):
-                self.ascii_matrix.append([])
-                for y in range(image.size[1]):
-                    pixel = image.getpixel((x, y))
-                    value = (pixel * (len(self.shader))) / 255
-                    self.ascii_matrix[x].append(self.shader[int(value) - 1])
+            spacer = "" if no_squaring else " "
+
+            if one_to_one:
+                for x in range(image.size[0]):
+                    self.ascii_matrix.append([])
+                    for y in range(image.size[1]):
+                        pixel = image.getpixel((x, y))
+                        value = (pixel * (len(self.shader))) / 255
+                        self.ascii_matrix[x].append(self.shader[int(value) - 1] + spacer)
+            else:
+                darkest_value = image.getpixel((0, 0))
+                lightest_value = image.getpixel((0, 0))
+                for x in range(image.size[0]):
+                    for y in range(image.size[1]):
+                        darkest_value = min(darkest_value, image.getpixel((x, y)))
+                        lightest_value = max(lightest_value, image.getpixel((x, y)))
+
+                for x in range(image.size[0]):
+                    self.ascii_matrix.append([])
+                    for y in range(image.size[1]):
+                        # What percentage of the full range is this pixel?
+                        pixel = image.getpixel((x, y))
+                        value = (pixel - darkest_value) / (lightest_value - darkest_value)
+                        # What character should we use for this pixel?
+                        char_index = int(value * (len(self.shader) - 1))
+                        self.ascii_matrix[x].append(self.shader[char_index] + spacer)
 
         self.ascii_matrix = self._rotate_and_flip(self.ascii_matrix)
 

@@ -8,7 +8,12 @@ parser = argparse.ArgumentParser(
 
     Scaling is done by reducing the image by a factor of 2 until it fits in the
     terminal window or the width and height are both below the max dimension you
-    specify.""",
+    specify.
+
+    Each ASCII character is chosen by expanding the range of values to the full
+    range of characters. For example, if the darkest value in the original image
+    is 100 (of 255), then 100 becomes the "new" 0. You can provide the -1 flag
+    to use exact values instead.""",
     formatter_class=argparse.RawTextHelpFormatter,
 )
 parser.add_argument("image_path", help="Path to the image to convert")
@@ -29,9 +34,21 @@ parser.add_argument(
     required=False,
 )
 parser.add_argument(
-    "-r",
-    "--reverse-values",
-    help="Reverse the value scale (i.e. darker values will use heavier characters)",
+    "-i",
+    "--invert-values",
+    help="Invert the value scale (i.e. darker values will use heavier characters)",
+    action="store_true",
+)
+parser.add_argument(
+    "-1",
+    "--one-to-one",
+    help="Assign characters to the exact pixel value (do not normalize the value range)",
+    action="store_true",
+)
+parser.add_argument(
+    "-q",
+    "--no-squaring",
+    help="Do not add blank characters to help square the image",
     action="store_true",
 )
 parser.add_argument(
@@ -48,5 +65,10 @@ ascii_image = convert.AsciiImage(
     shader=constants.SHADERS[args.shader - 1],
     max_allowable_width=args.max_width,
 )
-ascii_image.convert(args.original_size, args.reverse_values)
+ascii_image.convert(
+    args.original_size,
+    args.invert_values,
+    args.one_to_one,
+    args.no_squaring,
+)
 ascii_image.show()
