@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "asciibee"
-version = "0.1.0"
+version = "0.1.1"
 description = "An image-to-ascii-art converter"
 authors = ["Jamey Nakama <nakamajamey@gmail.com>"]
 readme = "README.md"
