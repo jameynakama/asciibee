@@ -58,7 +58,7 @@ parser.add_argument(
 parser.add_argument(
     "-q",
     "--no-squaring",
-    help="Do not add blank characters to help square the image",
+    help="Do not add blank characters to help square the image (most fonts are taller than wide)",
     action="store_true",
 )
 parser.add_argument(
