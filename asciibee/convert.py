@@ -54,7 +54,9 @@ class AsciiImage:
                     for y in range(image.size[1]):
                         pixel = image.getpixel((x, y))
                         value = (pixel * (len(self.shader))) / 255
-                        self.ascii_matrix[x].append(self.shader[int(value) - 1] + spacer)
+                        self.ascii_matrix[x].append(
+                            self.shader[int(value) - 1] + spacer
+                        )
             else:
                 darkest_value = image.getpixel((0, 0))
                 lightest_value = image.getpixel((0, 0))
@@ -68,7 +70,9 @@ class AsciiImage:
                     for y in range(image.size[1]):
                         # What percentage of the full range is this pixel?
                         pixel = image.getpixel((x, y))
-                        value = (pixel - darkest_value) / (lightest_value - darkest_value)
+                        value = (pixel - darkest_value) / (
+                            lightest_value - darkest_value
+                        )
                         # What character should we use for this pixel?
                         char_index = int(value * (len(self.shader) - 1))
                         self.ascii_matrix[x].append(self.shader[char_index] + spacer)
