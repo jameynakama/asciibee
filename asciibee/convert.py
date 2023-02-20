@@ -1,5 +1,6 @@
 import os
 
+import numpy
 from PIL import Image
 
 from asciibee import constants
@@ -28,17 +29,23 @@ class AsciiImage:
                 image = image.reduce(2)
         return image
 
+    def _rotate_and_flip(self, matrix: list) -> list:
+        rotated = numpy.rot90(matrix, 3)
+        return numpy.flip(rotated, 1)
+
     def convert(self, original_size: bool = False) -> None:
         with Image.open(self.image_path).convert("L") as image:
             if not original_size:
                 image = self._reduce(image)
 
-            for y in range(image.size[0]):
+            for x in range(image.size[0]):
                 self.ascii_matrix.append([])
-                for x in range(image.size[1]):
+                for y in range(image.size[1]):
                     pixel = image.getpixel((x, y))
                     value = (pixel * (len(self.shader) - 1)) / 255
-                    self.ascii_matrix[y].append(self.shader[int(value)])
+                    self.ascii_matrix[x].append(self.shader[int(value)])
+
+        self.ascii_matrix = self._rotate_and_flip(self.ascii_matrix)
 
     def show(self) -> None:
         for row in self.ascii_matrix:
