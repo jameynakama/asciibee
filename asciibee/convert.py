@@ -3,8 +3,6 @@ import os
 import numpy
 from PIL import Image
 
-from asciibee import constants
-
 
 class AsciiImage:
     ascii_matrix: list = []
@@ -42,8 +40,8 @@ class AsciiImage:
                 self.ascii_matrix.append([])
                 for y in range(image.size[1]):
                     pixel = image.getpixel((x, y))
-                    value = (pixel * (len(self.shader) - 1)) / 255
-                    self.ascii_matrix[x].append(self.shader[int(value)])
+                    value = (pixel * (len(self.shader))) / 255
+                    self.ascii_matrix[x].append(self.shader[int(value) - 1])
 
         self.ascii_matrix = self._rotate_and_flip(self.ascii_matrix)
 
