@@ -15,10 +15,10 @@ parser.add_argument("image_path", help="Path to the image to convert")
 parser.add_argument(
     "-s",
     "--shader",
-    help=f"The shader to use (they increase in complexity)",
+    help=f"The shader to use (they increase in complexity), default {constants.DEFAULT_SHADER}",
     type=int,
     choices=range(1, len(constants.SHADERS) + 1),
-    default=len(constants.SHADERS),
+    default=constants.DEFAULT_SHADER,
     required=False,
 )
 parser.add_argument(
@@ -27,6 +27,12 @@ parser.add_argument(
     help="The maximum allowable output width (number of columns)",
     type=int,
     required=False,
+)
+parser.add_argument(
+    "-r",
+    "--reverse-values",
+    help="Reverse the value scale (i.e. darker values will use heavier characters)",
+    action="store_true",
 )
 parser.add_argument(
     "-O",
@@ -42,5 +48,5 @@ ascii_image = convert.AsciiImage(
     shader=constants.SHADERS[args.shader - 1],
     max_allowable_width=args.max_width,
 )
-ascii_image.convert(args.original_size)
+ascii_image.convert(args.original_size, args.reverse_values)
 ascii_image.show()

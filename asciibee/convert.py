@@ -31,10 +31,13 @@ class AsciiImage:
         rotated = numpy.rot90(matrix, 3)
         return numpy.flip(rotated, 1)
 
-    def convert(self, original_size: bool = False) -> None:
+    def convert(self, original_size: bool = False, reverse_values: bool = False) -> None:
         with Image.open(self.image_path).convert("L") as image:
             if not original_size:
                 image = self._reduce(image)
+
+            if reverse_values:
+                self.shader = self.shader[::-1]
 
             for x in range(image.size[0]):
                 self.ascii_matrix.append([])
