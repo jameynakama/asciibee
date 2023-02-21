@@ -37,7 +37,7 @@ class AsciiImage:
 
         return brightness
 
-    def convert(self,) -> None:
+    def convert(self) -> None:
         with Image.open(self.image_path).convert("L") as image:
             if self.invert_values:
                 self.shader = self.shader[::-1]
@@ -54,13 +54,22 @@ class AsciiImage:
             for x in range(width_chunks):
                 crops.append([])
                 for y in range(height_chunks):
-                    crop = image.crop((x * self.chunk_size, y * self.chunk_size * 2, (x + 1) * self.chunk_size, (y + 1) * self.chunk_size * 2))
+                    crop = image.crop(
+                        (
+                            x * self.chunk_size,
+                            y * self.chunk_size * 2,
+                            (x + 1) * self.chunk_size,
+                            (y + 1) * self.chunk_size * 2,
+                        )
+                    )
                     if not darkest_value:
                         darkest_value = self.calculate_brightness(crop)
                     if not lightest_value:
                         lightest_value = self.calculate_brightness(crop)
                     darkest_value = min(darkest_value, self.calculate_brightness(crop))
-                    lightest_value = max(lightest_value, self.calculate_brightness(crop))
+                    lightest_value = max(
+                        lightest_value, self.calculate_brightness(crop)
+                    )
                     crops[x].append((crop, self.calculate_brightness(crop)))
             for x in range(width_chunks):
                 self.ascii_matrix.append([])

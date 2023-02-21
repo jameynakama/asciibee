@@ -56,6 +56,7 @@ parser.add_argument(
 
 args = parser.parse_args()
 
+
 def main():
     ascii_image = image.AsciiImage(
         args.image_path,
@@ -66,6 +67,7 @@ def main():
     )
     ascii_image.convert()
     ascii_image.show()
+
 
 if __name__ == "__main__":
     main()
