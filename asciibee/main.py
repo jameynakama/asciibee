@@ -4,7 +4,7 @@ from asciibee import constants, image
 
 shader_help_text = ""
 for shader in constants.SHADERS:
-    shader_help_text += f"{constants.SHADERS.index(shader) + 1}: {shader}\n    "
+    shader_help_text += f'{constants.SHADERS.index(shader) + 1}: "{shader}"\n    '
 
 parser = argparse.ArgumentParser(
     prog="asciibee",
@@ -28,7 +28,7 @@ parser.add_argument("image_path", help="Path to the image to convert")
 parser.add_argument(
     "-s",
     "--shader",
-    help=f"The shader to use (they increase in complexity), default {constants.DEFAULT_SHADER}",
+    help=f"The shader to use (they increase in complexity); default {constants.DEFAULT_SHADER}",
     type=int,
     choices=range(1, len(constants.SHADERS) + 1),
     default=constants.DEFAULT_SHADER,
@@ -37,13 +37,13 @@ parser.add_argument(
 parser.add_argument(
     "-S",
     "--user-shader",
-    help="Define your own shader as a sequence of characters",
+    help="Define your own shader as a sequence of characters; surround with quotes",
     required=False,
 )
 parser.add_argument(
     "-c",
     "--chunk-size",
-    help=f"Size of the chunks to covert to ASCII (larger values emit smaller images)",
+    help=f"Size of the chunks to covert to ASCII (larger chunks emit smaller images)",
     type=int,
     required=False,
 )
