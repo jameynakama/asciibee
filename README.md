@@ -4,17 +4,14 @@ An image-to-ascii-art converter
 
 ## Description
 
-The default settings are tuned to work well with fine art. Play with different
-shaders, image squaring, and value inversion for different results.
+The default settings are tuned to work best with fine art. Play with different
+shaders, chunk sizes, and value inversion for different results. Remember to
+decrease your font size if you can't see the whole image.
 
-Scaling is done by reducing the image by a factor of 2 until it fits in the
-terminal window or the width is below the max width you specify.
-
-Each ASCII character is chosen by expanding the range of pixel values to the
-full range of characters. For example, if the darkest value in the original
-image is 100 (of 255), and the lightest 230 (of 255), then 100 becomes the "new"
-0 (and darkest char) and 230 the new 255 (and lightest char). You can provide
-the -1 flag to use exact values instead.
+Scaling is accomplished by dividing the image into chunks and converting each
+chunk to a single character. The chunk size can be adjusted with the -c flag.
+The chunk size defaults to the pixel width of the image divided by 100. The
+output will tell you what chunk size was used.
 
 ## Installation
 
@@ -36,7 +33,7 @@ You can use it as an importable module as well.
 from asciibee.image import AsciiImage
 image = AsciiImage('/Users/jnakama/Downloads/port.jpeg')
 image.convert()  # Converts the image to a matrix of ASCII characters
-image.ascii_matrix # Here
+image.ascii_matrix # It's stored here
 image.show()  # Prints the characters
 ```
 
@@ -51,37 +48,31 @@ The easiest way to run the app locally:
 You can also install the deps and run it without the `poetry run` prefix.
 
 ```text
-                                      . .                     . .
-                      . : : .           . : .             : : .
-                        . : = .           . - .         : :
-                            . =             . -       : .
-                              : :           . - = - : :                 . . . .
-                                : :         - # # # # * .             . - : : : .
-                                  - -       + % @ % @ # -         : - :
-                                    - = - . = # * * * % : . - - = : .
-                                      . - * * * # # # * + * -
-                                          + + # # % % # * -
-                            .           . + * % % % % % * :               . .
-                        . = = = = - : : - * # % % % % # * + + - : : - - - - .
-                            . . . : = + * * * # % # % # # * + = + - . .
-                    . . : : - = = = + + + * + # * # * * * * + = = + = = - : . .
-            . : - - - - - - = = - = = = + + * + * * # = + * + = = - - = = - = - - - : : . .
-        . - - - - : - : - - - - = = = - + = : = # # # - . = + = = = - - - = = - - - = - - - : .
-      : - : - - - - = - - : : = - = - = = . * # # % % # * - = + = = = - - - - = = = - - = = - - :
-    : - - - : : - - - - : : = - - - - + . - # # # @ % @ % - : + = - - = - : - - - - - - - - - - -
-  . - - - : : : : - - : - - - - - - = =   + * + + * # # # * . = = = - = - - - - - : - - : - - = :
-  . - - - : : : : : - - - - - - - - + . . # # * * * # % # # : : = = - - - - - - - - - - - : - .
-    . : - : - : - - - : : : : - - - -   - % % # * % # @ @ % -   : + - - - - = = = = - - - : .
-        . . . . . . : : : : : . - -     - % % * + % % @ @ % =     . - . . : : . . . . .
-                            . = -       - * * + * * # # # * =       . - .
-                          : = .         - # # # # # * # % % +           : .
-                        . =             - % @ # * % % % @ % =             :
-                      . - .             - # % # * % @ @ @ % -             : .
-                      . .               . + * * * * # % # * .             . .
-                                          - * * * * # # % +
-                                          . * % * # % % % -
-                                            - * # # % # = .
-                                              : * # % = .
-                                                : + : .
-                                                  . .
+                    ...         .....             ......
+                   ..,,-,.         ..,.        ..,,....
+                      ..,-..         .,,.     .,..
+                         .-..         .,-,,..-..             ......
+                          ..,,.      .####+###+..         ..,,,,,,..
+                            ..+-..   -+@@@##@@#+  .....,,,,,.
+                              ..,---.-++++++#+#-.,--,,,....
+                                 ..-#++#######++#+,.
+                        .  ..      ,#++@@@@#@@@#+..            ...
+                    ..,,-,-,-,,,..,-++##@@##@###+++-,,,..,,,,,,,..
+                      ......,,,-++++#+###########+++----,,,... .
+             .....,,,,,,----------+++-###+#++#+++++----------,,,,,,......
+       ...,,,-,,,,,,,,,-,,,,--------+-..#####-..,+-+----,,,-----,-,,,---,,,,....
+    ...,,,,,,,,,,-,,,,,,,,,-,--,,--,.-+########+-,--+-----,,,,,,,---,,--,---,,,,,..
+  ..,,,,,,.,,.,,,,,,,.,,--,,,,-,--..-+####@@@@@##-.,-+-,,,--,,,,,,,,--,,,,,,--,,,,.
+  .,,,,,,.,.,,.,,,..,,-,,,,,,,--+..,++++++++#####+-.,----,,-,,-,,,,,,,,,-,,.,,,-,,.
+  .,,,,,,.,,,.,,,,,,,,,,,,,,-,-+. .+###++#####@###+...---,,,,-,,------,,,,,,,,,..
+    ...,,,,,,,.,,,,,,,,,,,,,,-,.  ,#@@@#-+###@@@@@#,   ,-,,,,,,,,,,,,,,,.,,....
+                ..........,-,...  ,+##++++###@@@##+-.    .,,,.....   .
+                     ..,-,...     ,+##++#++++######-.      ..,..
+                    .,,,...       ,#@@##+##@@#@@@@#-.        .,,.
+                   .,,.           .+####++#@@@@@@#+..         .,.
+                   ...            ..+++++++######+,.          ...
+                                    .+###++####@#-.
+                                     ,+##+######-.
+                                     ...-##@#+-...
+                                        ..--...
 ```
