@@ -4,6 +4,7 @@ version = "0.1.1"
 description = "An image-to-ascii-art converter"
 authors = ["Jamey Nakama <nakamajamey@gmail.com>"]
 readme = "README.md"
+packages = [{include = "asciibee"}]
 
 [tool.poetry.dependencies]
 python = "^3.11"
@@ -12,6 +13,10 @@ numpy = "^1.24.2"
 
 [tool.poetry.group.dev.dependencies]
 black = "^23.1.0"
+ipython = "^8.10.0"
+
+[tool.poetry.scripts]
+asciibee = "asciibee.main:main"
 
 [build-system]
 requires = ["poetry-core"]

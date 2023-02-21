@@ -1,6 +1,6 @@
 import argparse
 
-from asciibee import constants, convert
+from asciibee import constants, image
 
 parser = argparse.ArgumentParser(
     prog="asciibee",
@@ -70,16 +70,17 @@ parser.add_argument(
 
 args = parser.parse_args()
 
-ascii_image = convert.AsciiImage(
-    args.image_path,
-    shader=constants.SHADERS[args.shader - 1],
-    user_shader=args.user_shader,
-    max_allowable_width=args.max_width,
-)
-ascii_image.convert(
-    args.original_size,
-    args.invert_values,
-    args.one_to_one,
-    args.no_squaring,
-)
-ascii_image.show()
+def main():
+    ascii_image = image.AsciiImage(
+        args.image_path,
+        shader=constants.SHADERS[args.shader - 1],
+        user_shader=args.user_shader,
+        max_allowable_width=args.max_width,
+    )
+    ascii_image.convert(
+        args.original_size,
+        args.invert_values,
+        args.one_to_one,
+        args.no_squaring,
+    )
+    ascii_image.show()

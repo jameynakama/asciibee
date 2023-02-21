@@ -3,6 +3,8 @@ import os
 import numpy
 from PIL import Image
 
+from asciibee import constants
+
 
 class AsciiImage:
     ascii_matrix: list = []
@@ -10,7 +12,7 @@ class AsciiImage:
     def __init__(
         self,
         image_path: str,
-        shader: list,
+        shader: list = constants.SHADERS[constants.DEFAULT_SHADER - 1],
         user_shader: str = None,
         max_allowable_width: int = None,
     ) -> None:
