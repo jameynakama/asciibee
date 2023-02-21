@@ -84,3 +84,6 @@ def main():
         args.no_squaring,
     )
     ascii_image.show()
+
+if __name__ == "__main__":
+    main()

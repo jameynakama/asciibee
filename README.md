@@ -18,23 +18,27 @@ the -1 flag to use exact values instead.
 
 ## Installation
 
-Working on this. I'm new to python packaging.
-
-Currently, asciibee is pip installable, but it doesn't do anything when imported.
-
-I'd also like to provide an entrypoint so that it can be run as a CLI tool.
+`$ pip install asciibee`
 
 ## Usage
 
-NOTE: Currently requires a clone of the repo.
-
 The best way to learn how to use the app is via the help text:
 
-`$ poetry run python -m asciibee.main --help`
+`$ asciibee --help`
 
 The most simple command is passing in a path to an image file:
 
-`$ poetry run python -m asciibee.main ~/Downloads/starrynight.png`
+`$ asciibee ~/Downloads/starrynight.png`
+
+You can use it as an importable module as well.
+
+```python
+from asciibee.image import AsciiImage
+image = AsciiImage('/Users/jnakama/Downloads/port.jpeg')
+image.convert()  # Converts the image to a matrix of ASCII characters
+image.ascii_matrix # Here
+image.show()  # Prints the characters
+```
 
 ## Development
 
