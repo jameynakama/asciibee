@@ -5,6 +5,7 @@ description = "An image-to-ascii-art converter"
 authors = ["Jamey Nakama <nakamajamey@gmail.com>"]
 readme = "README.md"
 packages = [{include = "asciibee"}]
+repository = "https://github.com/jameynakama/asciibee/"
 
 [tool.poetry.dependencies]
 python = "^3.10"
