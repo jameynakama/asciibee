@@ -51,9 +51,14 @@ class AsciiImage:
             darkest_value = None
             lightest_value = None
             crops = []
+            num_chunks = width_chunks * height_chunks
+            current_chunk = 0
             for x in range(width_chunks):
                 crops.append([])
                 for y in range(height_chunks):
+                    current_chunk += 1
+                    percent_done = int((current_chunk / num_chunks) * 100)
+                    print(f"Processing... {percent_done}%", end="\r")
                     crop = image.crop(
                         (
                             x * self.chunk_size,
